@@ -1,0 +1,40 @@
+{
+    "swagger": "2.0",
+    "host": "clpsec",
+    "info": {
+      "description": "Application used for clpsec",
+      "version": "1.0.0",
+      "title": "clpsec app"
+    },
+    "schemes": [
+      "http"
+    ],
+    "consumes": [
+      "application/json"
+    ],
+    "produces": [
+      "application/json"
+    ],
+    "paths": {
+        "/api/v1/orange": {
+            "post": {
+              "operationId": "orangePressed",
+              "responses": {
+                "200": {
+                  "description": "orange pressed",
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+    },
+    "definitions": {
+    }
+  }
