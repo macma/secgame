@@ -10,8 +10,8 @@ const (
 	Port = ":8080"
 )
 
-func serveStatic(w http.ResponseWriter, r *http.Request) {
-	t, err := template.ParseFiles("./reactjs/index.html")
+func serveStaticClient(w http.ResponseWriter, r *http.Request) {
+	t, err := template.ParseFiles("../../reactjs/websocketjs.html")
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -19,6 +19,6 @@ func serveStatic(w http.ResponseWriter, r *http.Request) {
 }
 
 func ServeHTML() {
-	http.HandleFunc("/", serveStatic)
+	http.HandleFunc("/ws", serveStaticClient)
 	http.ListenAndServe(Port, nil)
 }

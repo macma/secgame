@@ -12,6 +12,7 @@ import (
 	"github.com/go-openapi/runtime/middleware"
 
 	"game/controllers"
+	"game/db"
 	"game/reactjs"
 	"game/restapi/operations"
 )
@@ -43,7 +44,11 @@ func configureAPI(api *operations.ClpsecAppAPI) http.Handler {
 	// if api.OrangePressedHandler == nil {
 	api.OrangePressedHandler = operations.OrangePressedHandlerFunc(func(params operations.OrangePressedParams) middleware.Responder {
 		controllers.Testfunc()
+
+		// btn := js.Global().Get("document").Call("getElementById", "someId")
+		// btn.Set("innerHTML", "changed by go")
 		res := operations.OrangePressedOKBody{Message: "aaa"}
+
 		//return "abc" //middleware.NotImplemented("operation operations.OrangePressed has not yet been implemented")
 		return &operations.OrangePressedOK{Payload: &res}
 	})
@@ -71,6 +76,10 @@ func configureServer(s *http.Server, scheme, addr string) {
 // The middleware configuration is for the handler executors. These do not apply to the swagger.json document.
 // The middleware executes after routing but before authentication, binding and validation
 func setupMiddlewares(handler http.Handler) http.Handler {
+
+	// var dbconn *sql.DB
+	// dbconn =
+	db.InitDB()
 	fmt.Println("this is init of middle ware")
 	return handler
 }
@@ -78,7 +87,8 @@ func setupMiddlewares(handler http.Handler) http.Handler {
 // The middleware configuration happens before anything, this middleware also applies to serving the swagger.json document.
 // So this is a good place to plug in a panic handling middleware, logging and metrics
 func setupGlobalMiddleware(handler http.Handler) http.Handler {
+	go reactjs.ServeWS()
 	fmt.Println("this is init of global middleware")
-	reactjs.ServeHTML()
+	go reactjs.ServeHTML()
 	return handler
 }

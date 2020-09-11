@@ -1,0 +1,46 @@
+<html>
+    <head>
+        <script src="https://fb.me/react-0.14.3.min.js"></script>
+        <script src="https://fb.me/react-dom-0.14.3.min.js"></script>
+    </head>
+   <body>
+      <div id="root"></div>
+      <h1>Long/lat:</h1>
+     <!-- 1 -->
+     <br>
+     <table>
+         <tr></tr>
+         <tr><td>Orange Click Count:</td><td><div id="long"></div></td></tr>
+         <tr><td>Blue Click Count:</td><td><div id="lat"></div></td></tr>
+     </table>
+      <!-- fadkfjakl<div id="long"></div>
+      aaaaa<div id="lat"></div> -->
+      <br>
+      <script type="text/javascript">
+
+		ReactDOM.render(
+			React.createElement('p1', {id: 'orangeCounter'}, '0'),
+			document.getElementById('long')
+        )
+        ReactDOM.render(
+			React.createElement('p1', {id: 'blueCounter'}, '0'),
+			document.getElementById('lat')
+		)
+         var long = document.getElementById("orangeCounter");
+         var lat = document.getElementById("blueCounter");
+         
+        // 2
+         var exampleSocket = new WebSocket("ws://localhost:8844/ws")
+         
+         // 3
+         var update = function(){
+           exampleSocket.onmessage = function (event) {
+             var longlatArr = event.data.split(" ");
+             long.textContent = longlatArr[1].toString();
+             lat.textContent = longlatArr[0].toString();
+           }
+         };
+         window.setTimeout(update);
+      </script>
+   </body>
+</html>

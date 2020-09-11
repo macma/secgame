@@ -1,6 +1,8 @@
 package controllers
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func Testfunc() {
 	fmt.Println("aaa")
