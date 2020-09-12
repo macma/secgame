@@ -27,14 +27,12 @@
       <br>
 
       <script type="text/jsx">
-        var data = [
-];
-ReactDOM.render(
-        <SimpleLineChart />,
-        document.getElementById('container')
-        );
+        ReactDOM.render(
+				  <SimpleLineChart />,
+				  document.getElementById('container')
+				  );
       </script>
-      <script type="text/jsx">
+      <script type="text/javascript">
 
 		ReactDOM.render(
 			React.createElement('p1', {id: 'orangeCounter'}, '0'),
@@ -52,7 +50,15 @@ ReactDOM.render(
          
         // 2
          var exampleSocket = new WebSocket("ws://localhost:8844/ws")
-         
+         var data = [
+      {name: 'Page A', uv: 4000, pv: 2400, amt: 2400},
+      {name: 'Page B', uv: 3000, pv: 1398, amt: 2210},
+      {name: 'Page C', uv: 2000, pv: 9800, amt: 2290},
+      {name: 'Page D', uv: 2780, pv: 3908, amt: 2000},
+      {name: 'Page E', uv: 1890, pv: 4800, amt: 2181},
+      {name: 'Page F', uv: 2390, pv: 3800, amt: 2500},
+      {name: 'Page G', uv: 3490, pv: 4300, amt: 2100},
+];
          // 3
          var update = function(){
            exampleSocket.onmessage = function (event) {
@@ -60,19 +66,11 @@ ReactDOM.render(
              orange.textContent = orangeBlueArr[1].toString();
              blue.textContent = orangeBlueArr[0].toString();
              
-             console.log("data000 is:" + data)
-             var string = '[{ "name":"PageA", "uv":2000, "pv":2400,"amt":2600},{ "name":"Pageb", "uv":2400, "pv":3400,"amt":6600}]';
-            data = JSON.parse(string);
-            //  data = JSON.parse('{name: 1, uv: 4000, pv: 2400, amt: 2400}');
-            // data = [{name: 'Page A', uv: 2000, pv: 2400, amt: 2400}];
-             console.log("data111 is:" + data)
-             
-        ReactDOM.render(
-          <SimpleLineChart />,
-          document.getElementById('container')
-          );
+            // data = JSON.parse(orangeBlueArr[2]);
            }
          };
+
+        
          window.setTimeout(update);
       </script>
    </body>
