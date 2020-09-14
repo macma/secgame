@@ -42,8 +42,14 @@ func NewClpsecAppAPI(spec *loads.Document) *ClpsecAppAPI {
 
 		JSONProducer: runtime.JSONProducer(),
 
+		BluePressedHandler: BluePressedHandlerFunc(func(params BluePressedParams) middleware.Responder {
+			return middleware.NotImplemented("operation BluePressed has not yet been implemented")
+		}),
 		OrangePressedHandler: OrangePressedHandlerFunc(func(params OrangePressedParams) middleware.Responder {
 			return middleware.NotImplemented("operation OrangePressed has not yet been implemented")
+		}),
+		QueryHandler: QueryHandlerFunc(func(params QueryParams) middleware.Responder {
+			return middleware.NotImplemented("operation Query has not yet been implemented")
 		}),
 	}
 }
@@ -79,8 +85,12 @@ type ClpsecAppAPI struct {
 	//   - application/json
 	JSONProducer runtime.Producer
 
+	// BluePressedHandler sets the operation handler for the blue pressed operation
+	BluePressedHandler BluePressedHandler
 	// OrangePressedHandler sets the operation handler for the orange pressed operation
 	OrangePressedHandler OrangePressedHandler
+	// QueryHandler sets the operation handler for the query operation
+	QueryHandler QueryHandler
 	// ServeError is called when an error is received, there is a default handler
 	// but you can set your own with this
 	ServeError func(http.ResponseWriter, *http.Request, error)
@@ -157,8 +167,14 @@ func (o *ClpsecAppAPI) Validate() error {
 		unregistered = append(unregistered, "JSONProducer")
 	}
 
+	if o.BluePressedHandler == nil {
+		unregistered = append(unregistered, "BluePressedHandler")
+	}
 	if o.OrangePressedHandler == nil {
 		unregistered = append(unregistered, "OrangePressedHandler")
+	}
+	if o.QueryHandler == nil {
+		unregistered = append(unregistered, "QueryHandler")
 	}
 
 	if len(unregistered) > 0 {
@@ -251,7 +267,15 @@ func (o *ClpsecAppAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
+	o.handlers["POST"]["/api/v1/blue"] = NewBluePressed(o.context, o.BluePressedHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
 	o.handlers["POST"]["/api/v1/orange"] = NewOrangePressed(o.context, o.OrangePressedHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/api/v1/query"] = NewQuery(o.context, o.QueryHandler)
 }
 
 // Serve creates a http handler to serve the API over HTTP

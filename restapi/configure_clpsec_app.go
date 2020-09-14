@@ -11,7 +11,6 @@ import (
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
 
-	"game/controllers"
 	"game/db"
 	"game/reactjs"
 	"game/restapi/operations"
@@ -43,14 +42,24 @@ func configureAPI(api *operations.ClpsecAppAPI) http.Handler {
 
 	// if api.OrangePressedHandler == nil {
 	api.OrangePressedHandler = operations.OrangePressedHandlerFunc(func(params operations.OrangePressedParams) middleware.Responder {
-		controllers.Testfunc()
+		str := reactjs.ProcessClickForSwagger(0)
+		res := operations.OrangePressedOKBody{Message: str}
 
-		// btn := js.Global().Get("document").Call("getElementById", "someId")
-		// btn.Set("innerHTML", "changed by go")
-		res := operations.OrangePressedOKBody{Message: "aaa"}
-
-		//return "abc" //middleware.NotImplemented("operation operations.OrangePressed has not yet been implemented")
 		return &operations.OrangePressedOK{Payload: &res}
+	})
+	api.BluePressedHandler = operations.BluePressedHandlerFunc(func(params operations.BluePressedParams) middleware.Responder {
+		str := reactjs.ProcessClickForSwagger(1)
+		res := operations.BluePressedOKBody{Message: str}
+
+		return &operations.BluePressedOK{Payload: &res}
+	})
+	api.QueryHandler = operations.QueryHandlerFunc(func(params operations.QueryParams) middleware.Responder {
+		val := params.GqlFields.GqlField
+
+		str := reactjs.QueryForSwagger(*val)
+		res := operations.QueryOKBody{Message: str}
+
+		return &operations.QueryOK{Payload: &res}
 	})
 	// }
 

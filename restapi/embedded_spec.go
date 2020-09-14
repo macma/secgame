@@ -35,6 +35,24 @@ func init() {
   },
   "host": "clpsec",
   "paths": {
+    "/api/v1/blue": {
+      "post": {
+        "operationId": "bluePressed",
+        "responses": {
+          "200": {
+            "description": "blue pressed",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/orange": {
       "post": {
         "operationId": "orangePressed",
@@ -50,6 +68,48 @@ func init() {
               }
             }
           }
+        }
+      }
+    },
+    "/api/v1/query": {
+      "post": {
+        "operationId": "query",
+        "parameters": [
+          {
+            "description": "graphql fields",
+            "name": "gqlFields",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/gql"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "query",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "gql": {
+      "type": "object",
+      "required": [
+        "gqlField"
+      ],
+      "properties": {
+        "gqlField": {
+          "type": "string"
         }
       }
     }
@@ -73,6 +133,24 @@ func init() {
   },
   "host": "clpsec",
   "paths": {
+    "/api/v1/blue": {
+      "post": {
+        "operationId": "bluePressed",
+        "responses": {
+          "200": {
+            "description": "blue pressed",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/orange": {
       "post": {
         "operationId": "orangePressed",
@@ -88,6 +166,48 @@ func init() {
               }
             }
           }
+        }
+      }
+    },
+    "/api/v1/query": {
+      "post": {
+        "operationId": "query",
+        "parameters": [
+          {
+            "description": "graphql fields",
+            "name": "gqlFields",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/gql"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "query",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "gql": {
+      "type": "object",
+      "required": [
+        "gqlField"
+      ],
+      "properties": {
+        "gqlField": {
+          "type": "string"
         }
       }
     }

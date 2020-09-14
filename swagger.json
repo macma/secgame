@@ -1,40 +1,100 @@
 {
-    "swagger": "2.0",
-    "host": "clpsec",
-    "info": {
-      "description": "Application used for clpsec",
-      "version": "1.0.0",
-      "title": "clpsec app"
-    },
-    "schemes": [
-      "http"
-    ],
-    "consumes": [
-      "application/json"
-    ],
-    "produces": [
-      "application/json"
-    ],
-    "paths": {
-        "/api/v1/orange": {
-            "post": {
-              "operationId": "orangePressed",
-              "responses": {
-                "200": {
-                  "description": "orange pressed",
-                  "schema": {
-                    "type": "object",
-                    "properties": {
-                      "message": {
-                        "type": "string"
-                      }
-                    }
-                  }
+  "swagger": "2.0",
+  "host": "clpsec",
+  "info": {
+    "description": "Application used for clpsec",
+    "version": "1.0.0",
+    "title": "clpsec app"
+  },
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+
+  "paths": {
+    "/api/v1/orange": {
+      "post": {
+        "operationId": "orangePressed",
+        "responses": {
+          "200": {
+            "description": "orange pressed",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
                 }
               }
             }
           }
+        }
+      }
     },
-    "definitions": {
+    "/api/v1/blue": {
+      "post": {
+        "operationId": "bluePressed",
+        "responses": {
+          "200": {
+            "description": "blue pressed",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/query": {
+      "post": {
+        "operationId": "query",
+        
+        "parameters": [
+          {
+            "name": "gqlFields",
+            "in": "body",
+            "required": true,
+            "description": "graphql fields",
+            "schema": {
+              "$ref": "#/definitions/gql"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "query",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "gql": {
+      "type": "object",
+      "required": [
+        "gqlField"
+      ],
+      "properties": {
+        "gqlField": {
+          "type": "string"
+        }
+      }
     }
   }
+}

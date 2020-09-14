@@ -11,7 +11,7 @@ const (
 )
 
 func serveDashboard(w http.ResponseWriter, r *http.Request) {
-	t, err := template.ParseFiles("../../reactjs/websocketjs.html")
+	t, err := template.ParseFiles("./reactjs/websocketjs.html")
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -19,12 +19,12 @@ func serveDashboard(w http.ResponseWriter, r *http.Request) {
 }
 
 func serveClient(w http.ResponseWriter, r *http.Request) {
-	var tmpl = template.Must(template.ParseFiles("../../reactjs/client.html"))
+	var tmpl = template.Must(template.ParseFiles("./reactjs/client.html"))
 	tmpl.Execute(w, nil)
 }
 
 func ServeHTML() {
-	http.Handle("/", http.FileServer(http.Dir("../../reactjs/")))
+	http.Handle("/", http.FileServer(http.Dir("./reactjs/")))
 
 	http.HandleFunc("/client", serveClient)
 	http.HandleFunc("/ws", serveDashboard)
